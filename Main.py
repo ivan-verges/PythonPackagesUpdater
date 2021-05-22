@@ -1,8 +1,12 @@
 from subprocess import call, check_output
+import sys
+
+#Gets The Current Python Binary Running The Script
+PYTHON_PATH = sys.executable
 
 #Updates Current PIP Module to Latest Version
-print ("Updating Pip")
-call("python3 -m pip install --upgrade pip", shell=True)
+print ("Updating Pip Using: " + PYTHON_PATH)
+call(PYTHON_PATH + " -m pip install --upgrade pip", shell=True)
 
 #Gets All Outdated Modules from PIP
 print ("Getting Outdated Packages")
@@ -11,7 +15,7 @@ packages = check_output(["pip", "list", "-o"])
 #Converts the Response from Bytes to String
 packages = packages.decode("utf-8")
 
-#Converts the String to a String Array Separated By the "Return" and "New Line" Characters
+#Converts the String to a String Array Separated By the "Return" and/or "New Line" Characters
 if "\r\n" in packages:
     packages = packages.split("\r\n")
 else:
